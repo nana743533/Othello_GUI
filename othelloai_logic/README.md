@@ -43,14 +43,26 @@ AIの思考ルーチン（探索部）です。
 - 標準C++ライブラリ (`<iostream>`, `<stdio.h>`, `<string>`)
 - 各ファイルは相互に依存しています（`othello.cpp` が他をインクルード）。
 
-## 🚀 Usage (Standalone)
-
-単体でコンパイルして実行する場合：
+## 🚀 Usage
 
 ```bash
+# ビルド
 g++ othello.cpp -o othello
-./othello
+
+# 実行 (APIモード)
+./othello [board_string] [turn]
 ```
+
+- **board_string**: 盤面64マスの状態を表す文字列。
+  - `0`: 黒石
+  - `1`: 白石
+  - `2`: 空き
+  - 左上(A1)から右下(H8)への順序。合計64文字。
+- **turn**: 手番。
+  - `0`: 黒番
+  - `1`: 白番
+- **出力**:
+  - 次の一手のインデックス（0〜63）。
 
 ```mermaid
 graph TD
