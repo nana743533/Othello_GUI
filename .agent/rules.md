@@ -62,7 +62,7 @@
 - **Base Branch**: `frontend` (Main development branch for frontend)
 - **Feature Branches**: `frontend-1`, `frontend-2`, ... (Numbered feature branches)
 - **Workflow**: 
-    1. `frontend` から `frontend-N` を作成
+    1. `frontend` から `frontend-N` を作成（サブタスクごとに実装）
     2. 実装・コミット
     3. `frontend` へ向けてPR作成（シミュレーション: pushしてユーザーに通知）
     4. 承認後、次の `frontend-(N+1)` へ
