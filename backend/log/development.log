@@ -1,9 +1,0 @@
-Started POST "/api/v1/games/next_move" for ::1 at 2025-12-14 03:06:31 +0900
-  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='Backend'*/[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Backend'*/[0m
-  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
-Processing by Api::V1::GamesController#next_move as */*
-  Parameters: {"board" => "2222222222222222222222222221022222201222222222222222222222222222", "turn" => 0, "game" => {"board" => "2222222222222222222222222221022222201222222222222222222222222222", "turn" => 0}}
-Completed 200 OK in 39ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
-
-
