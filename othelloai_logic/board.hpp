@@ -41,6 +41,9 @@ int pop_digit[n_line][hw];
  int pow3[hw];
 
 
+
+
+
 //あるインデックスをそれぞれの色についてビットボード化する
 inline int create_one_color(int idx,const int color)
 {
@@ -214,9 +217,50 @@ class board{
     public:
     int board_idx[n_board_idx];
     int player;
-
+    int value;
 
     public:
+    //operaterの定義（”＝＝”、”＜”、”！＝”）
+
+    bool operator==(const board& another) const {
+        if(this->player!=another.player)
+        return false;
+        if(this->board_idx!=another.board_idx)
+        return false;
+
+    return true;
+}
+
+bool operator!=(const board& another) const {
+    return !this<=(operator==(another));
+}
+
+
+    bool operator<(const board& another) const {
+    return this->value > another.value;
+}
+
+//ハッシュ関数
+   struct hash {
+            typedef size_t result_type;
+
+            // ハッシュテーブルで使うためのハッシュ関数
+            // hash = sum(i=0からi=7)(インデックス[i] * 17^i)
+            // 17を使うとやたら性能が良い。
+            size_t operator()(const board& b) const {
+                return
+                    b.board_idx[0] + 
+                    b.board_idx[1] * 17 + 
+                    b.board_idx[2] * 289 + 
+                    b.board_idx[3] * 4913 + 
+                    b.board_idx[4] * 83521 + 
+                    b.board_idx[5] * 1419857 + 
+                    b.board_idx[6] * 24137549 + 
+                    b.board_idx[7] * 410338673;
+            }
+        };
+
+
     //合法判定を行う関数
     inline bool legal_place(int g_place)
     {
