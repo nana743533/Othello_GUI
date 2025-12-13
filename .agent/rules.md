@@ -58,6 +58,15 @@
     - 作業前に計画をアップデートし、作業後にチェックを入れること。
 - **Q&A Priority**: ユーザーからの質問や懸念点（気になったところ）には必ず回答し、解決してから元のタスクに戻ってください。
 
-## 5. File Structure
+## 5. Branching Strategy
+- **Base Branch**: `frontend` (Main development branch for frontend)
+- **Feature Branches**: `frontend-1`, `frontend-2`, ... (Numbered feature branches)
+- **Workflow**: 
+    1. `frontend` から `frontend-N` を作成
+    2. 実装・コミット
+    3. `frontend` へ向けてPR作成（シミュレーション: pushしてユーザーに通知）
+    4. 承認後、次の `frontend-(N+1)` へ
+
+## 6. File Structure
 - 新しいコンポーネントを作成する際は、必ず `src/components` 配下に配置する（Next.js構築後）。
 - 破壊的な変更を行う前には必ず `implementation_plan.md` を作成し、ユーザーの承認を得る。
