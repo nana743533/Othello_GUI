@@ -24,3 +24,5 @@
 
 # Ignore Byebug history
 .byebug_history
+/.kamal/*
+!/.kamal/hooks
