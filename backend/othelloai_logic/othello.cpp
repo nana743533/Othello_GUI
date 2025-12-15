@@ -30,7 +30,17 @@ int main(int argc, char *argv[]) {
     // 2. 引数から盤面を復元
     std::string s_board = argv[1];
     for (int i = 0; i < hw2; ++i) {
-      arr[i] = s_board[i] - '0'; // char '0'~'2' -> int 0~2
+      // Input: '0'=Empty, '1'=Black, '2'=White
+      // C++:    0=Black,   1=White,   2=Vacant
+      char c = s_board[i];
+      if (c == '0')
+        arr[i] = 2; // Empty -> Vacant
+      else if (c == '1')
+        arr[i] = 0; // Black -> Black
+      else if (c == '2')
+        arr[i] = 1; // White -> White
+      else
+        arr[i] = 2; // Default to Vacant
     }
     b.trans_idx(arr);
 
