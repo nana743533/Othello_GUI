@@ -41,6 +41,7 @@ yarn-error.log*
 next-env.d.ts
 othello_api
 backend/othelloai_logic/othello
+backend/othelloai_logic/test_othello
 
 # python
 __pycache__/

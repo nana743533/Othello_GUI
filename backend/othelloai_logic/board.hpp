@@ -1,14 +1,21 @@
-#include <iostream>
 #pragma once
 
+#include <iostream>
+
 using namespace std;
-#define hw 8
-#define hw2 64
-#define n_board_idx 38
-#define n_line 6561
-#define vacant 0
-#define black 1
-#define white 2
+
+// 盤面サイズ
+#define hw 8        // 縦横のマス数（8x8）
+#define hw2 64      // 全マス数（8*8）
+
+// 盤面表現の定数
+#define n_board_idx 38  // ライン数（横8 + 縦8 + 斜め11 + 斜め11）
+#define n_line 6561     // ラインパターン数（3^8 = 各マスが空き/黒/白の3通り）
+
+// セル状態の定義
+#define vacant 0  // 空きマス
+#define black 1   // 黒石
+#define white 2   // 白石
 
 const int global_place[n_board_idx][hw]{
     {0, 1, 2, 3, 4, 5, 6, 7},         {8, 9, 10, 11, 12, 13, 14, 15},
@@ -158,7 +165,7 @@ void init_board() {
   // flip_arr[2][n_line][hw],put_arr[2][n_line][hw]を埋める処理
 
   for (int line = 0; line < n_line; line++) {
-    int b, w, add, bp, wp, bw;
+    int b, w, add, bp, wp;
 
     b = create_one_color(line, black);
     w = create_one_color(line, white);
@@ -198,9 +205,11 @@ public:
   bool operator==(const board &another) const {
     if (this->player != another.player)
       return false;
-    if (this->board_idx != another.board_idx)
-      return false;
-
+    // 全ライン要素を比較して等価性を判定
+    for (int i = 0; i < n_board_idx; ++i) {
+      if (this->board_idx[i] != another.board_idx[i])
+        return false;
+    }
     return true;
   }
 
@@ -243,7 +252,7 @@ public:
   };
 
   // idx→[]
-  inline void trans_arr(int arr[]) {
+  inline void trans_arr(int arr[]) const {
     // まずすべて空きで初期化
     for (int g = 0; g < hw2; ++g) {
       arr[g] = vacant;
@@ -328,46 +337,3 @@ private:
   }
 };
 
-//     //着手を行う関数
-//     inline void put(int g_place){
-//     int line, p, rl, rr, pos;
-
-//     for (int i = 0; i < 4; i++) {
-//         line = place_included[g_place][i];  // このマスを含むライン番号
-//         if (line == -1)
-//             break;
-
-//         p = local_place[g_place][i];        // そのライン内での位置 (
-
-//         rl = move_arr[this->player][board_idx[line]][p][0];  //
-//         左側にひっくり返す個数 rr =
-//         move_arr[this->player][board_idx[line]][p][1];  //
-//         右側にひっくり返す個数
-
-//         // 左方向
-//         pos = p - 1;
-//         for (int l = 0; l < rl; l++) {
-//             board_idx[line] = flip_arr[this->player][board_idx[line]][pos];
-//             pos -= 1;
-//         }
-
-//         // 右方向
-//         pos = p + 1;
-//         for (int r = 0; r < rr; r++) {
-//             board_idx[line] = flip_arr[this->player][board_idx[line]][pos];
-//             pos += 1;
-//         }
-
-//         board_idx[line] = put_arr[this->player][board_idx[line]][p];
-//         //test
-//         printf("%i番目のラインにおいて　rl:%d , rr:%d , g_place:%d , p:%d
-//         \n",i,rl,rr,g_place,p);
-//     }
-// }
-
-//     盤面を動かす関数
-//     inline board move_b(int g_place){
-//     board res = *this;
-//     res.put(g_place);
-//     return res;
-// };
