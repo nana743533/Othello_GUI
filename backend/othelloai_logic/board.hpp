@@ -252,7 +252,7 @@ public:
   };
 
   // idx→[]
-  inline void trans_arr(int arr[]) {
+  inline void trans_arr(int arr[]) const {
     // まずすべて空きで初期化
     for (int g = 0; g < hw2; ++g) {
       arr[g] = vacant;
