@@ -136,7 +136,7 @@ backend/othelloai_logic/
 cd backend
 bundle install
 # C++エンジンのコンパイル
-cd othelloai_logic && g++ -O3 -o othello othello.cpp
+cd othelloai_logic && make
 cd ..
 # サーバー起動 (Port: 3001)
 bin/rails s -p 3001
@@ -152,7 +152,35 @@ npm run dev
 
 Webブラウザで `http://localhost:3000` にアクセスしてください。
 
-## � Roadmap
+## 🧪 Testing
+
+### C++ AI Engine Tests
+```bash
+cd backend/othelloai_logic
+make test
+```
+
+The AI engine includes 31 unit tests covering:
+- Board initialization and conversion
+- Legal move detection
+- Move execution and validation
+- AI search functionality
+- Edge cases and pass scenarios
+
+### Backend Tests
+```bash
+cd backend
+bin/rails test        # Minitest
+bundle exec rspec     # RSpec
+```
+
+### Frontend Tests
+```bash
+cd frontend
+npm run lint
+```
+
+## 📊 Roadmap
 - **認証機能**: ユーザーログイン、戦績保存。
 - **リアルタイム対戦**: ActionCable または WebSocket を用いた対人戦。
 - **PWA化**: モバイル端末でのネイティブアプリのような体験。

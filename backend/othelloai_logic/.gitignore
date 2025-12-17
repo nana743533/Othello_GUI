@@ -1,0 +1,13 @@
+# Compiled binaries
+othello
+test_othello
+
+# Object files
+*.o
+*.obj
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb

@@ -3,16 +3,40 @@
 このディレクトリには、C++で実装されたオセロAIのコアロジックが含まれています。
 GUIアプリケーションから呼び出されることを想定した、高速なビットボード/インデックスベースの処理系です。
 
+## 🎯 AI Design & Behavior
+
+### Core Algorithm: Nega-Alpha Search
+The AI uses **Nega-alpha** search, an optimized variant of the Minimax algorithm with alpha-beta pruning. Key features:
+
+1. **Iterative Deepening**: Starts with shallow searches and progressively deepens, allowing for time-bounded searches
+2. **Transposition Table**: Caches evaluated positions to avoid redundant computation
+3. **Move Ordering**: Prioritizes promising moves based on previous search results to improve pruning efficiency
+4. **Static Evaluation**: Uses positional weights to evaluate non-terminal board states
+
+### Search Parameters
+- **Default Depth**: 9 ply (half-moves)
+- **Offset**: 3 (for iterative deepening, starts at depth 6)
+- **Time Complexity**: O(b^d) where b is branching factor (~7-10 for Othello) and d is depth
+
+### Evaluation Function
+Uses a **static positional evaluation** approach:
+- **Corner squares** (0, 7, 56, 63): Highest value (never flipped)
+- **C-squares** (adjacent to corners): Negative value (dangerous)
+- **X-squares** (diagonal to corners): Very negative (often lead to losing corners)
+- **Edge squares**: Moderate positive value
+- **Center squares**: Low to moderate value
+
+The evaluation is calculated using pre-computed line scores for efficiency.
+
 ## 📂 File Structure
 
 ### [othello.cpp](othello.cpp)
-ゲームのメインプログラムです。
-- ユーザーインターフェース（CUI）とゲームループを管理します。
-- プレイヤー（人間）とAIの手番を制御し、勝敗を決定します。
-- **主な関数**:
-    - `main`: ゲームの進行管理。
-    - `print`: コンソールへの盤面表示。
-    - `init_game`: ゲームの初期化。
+Main entry point for the AI engine.
+- Parses command-line arguments (board state and turn)
+- Initializes board and evaluation tables
+- Invokes AI search and outputs the best move
+- **Key functions**:
+    - `main`: Orchestrates initialization and search
 
 ### [board.hpp](board.hpp)
 オセロの盤面状態を管理するヘッダーファイルです。
@@ -23,46 +47,112 @@ GUIアプリケーションから呼び出されることを想定した、高�
     - `init_board`: 遷移テーブルの初期化。
 
 ### [ai1.cpp](ai1.cpp)
-AIの思考ルーチン（探索部）です。
-- **アルゴリズム**: **Nega-alpha法**（Minimax法の改良版、Alpha-Beta法と同等）を採用しています。
-- 指定された深さまで先読みを行い、最善の手を返します。
-- **主な関数**:
-    - `search`: 探索のルート関数。
-    - `nega_alpha`: 再帰的な探索関数。
+AI search engine implementation.
+- **Algorithm**: **Nega-alpha** (improved Minimax with alpha-beta pruning)
+- Performs look-ahead search to specified depth and returns best move
+- **Key functions**:
+    - `search`: Root search function with iterative deepening
+    - `nega_alpha`: Recursive search with alpha-beta pruning
+    - `moveordering_evaluate`: Heuristic for move ordering
 
 ### [cell_evaluate.hpp](cell_evaluate.hpp)
-盤面の評価関数です。
-- **手法**: **位置重み付け評価**（Static Evaluation）。
-- 盤面の各マスに予め決められた点数（四隅は高く、その周辺は低くなど）を割り当て、現在の盤面のスコアを算出します。
-- **主な機能**:
-    - `evaluate`: 現在の盤面の評価値を計算。
-    - `evaluate_init`: 評価テーブルの初期化。
+Static evaluation function for board positions.
+- **Method**: **Positional weight evaluation**
+- Assigns pre-determined scores to each square (corners high, X-squares negative, etc.)
+- Calculates current board score for non-terminal positions
+- **Key functions**:
+    - `evaluate`: Computes evaluation score for a board state
+    - `evaluate_init`: Initializes pre-computed evaluation tables
+    
+### [test_othello.cpp](test_othello.cpp)
+Comprehensive unit test suite.
+- 31 test cases covering core functionality
+- Tests board operations, legal moves, AI search, and edge cases
+- Simple assertion-based test framework
+- Run with `make test`
 
 ## 🛠 Dependencies
 
 - 標準C++ライブラリ (`<iostream>`, `<stdio.h>`, `<string>`)
 - 各ファイルは相互に依存しています（`othello.cpp` が他をインクルード）。
 
-## 🚀 Usage
+## 🚀 Build & Run
+
+### Building the AI Engine
+
+Using Make (recommended):
+```bash
+make          # Build the othello binary
+make clean    # Clean build artifacts
+make rebuild  # Clean and rebuild
+```
+
+Or build manually:
+```bash
+g++ -Wall -Wextra -O3 -o othello othello.cpp
+```
+
+### Running the AI Engine (API Mode)
 
 ```bash
-# ビルド
-g++ othello.cpp -o othello
-
-# 実行 (APIモード)
 ./othello [board_string] [turn]
 ```
 
 - **board_string**: 盤面64マスの状態を表す文字列。
-  - `0`: 黒石
-  - `1`: 白石
-  - `2`: 空き
+  - `0`: 空き
+  - `1`: 黒石
+  - `2`: 白石
   - 左上(A1)から右下(H8)への順序。合計64文字。
 - **turn**: 手番。
   - `0`: 黒番
   - `1`: 白番
 - **出力**:
   - 次の一手のインデックス（0〜63）。
+
+### Example
+```bash
+# Standard initial position (black to move)
+./othello "0000000000000000000000000002100000012000000000000000000000000000" 0
+# Output: 19 (one of the four legal opening moves)
+```
+
+## 🧪 Testing
+
+### Running Unit Tests
+
+The project includes comprehensive unit tests that cover:
+- Board initialization
+- Board representation conversion
+- Legal move detection
+- Move execution
+- Pass scenarios
+- AI search functionality
+- Edge cases
+
+Run tests using Make:
+```bash
+make test     # Build and run all tests
+```
+
+Or build and run manually:
+```bash
+g++ -Wall -Wextra -O2 -o test_othello test_othello.cpp
+./test_othello
+```
+
+### Test Coverage
+
+The test suite includes 31 test cases covering:
+1. **Board Initialization** - Verifies lookup tables are correctly initialized
+2. **Board Conversion** - Tests idx ↔ array conversion functions
+3. **Initial Position Legal Moves** - Validates 4 legal opening moves
+4. **Move Execution** - Tests move application and player switching
+5. **Pass Move Scenario** - Handles positions with no legal moves
+6. **Corner Positions** - Verifies corners are not legal in initial position
+7. **Evaluate Function** - Tests static evaluation function
+8. **AI Search** - Validates AI returns legal moves
+9. **Board Equality** - Tests board comparison operator
+10. **Move Sequence** - Tests multiple consecutive moves
 
 ```mermaid
 graph TD
