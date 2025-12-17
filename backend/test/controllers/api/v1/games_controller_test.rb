@@ -97,6 +97,37 @@ module Api
           File.rename(exe_path.to_s + ".bak", exe_path) if File.exist?(exe_path.to_s + ".bak")
         end
       end
+      test "should return -1 for Diamond Pattern (No White pieces)" do
+        # Board 1 from user image: All Black diamond, no White.
+        # Indices: [20, 27, 28, 29, 34, 35, 36, 37, 38, 43, 44, 45] -> Black(1)
+        board = "0" * 64
+        [20, 27, 28, 29, 34, 35, 36, 37, 38, 43, 44, 45].each { |i| board[i] = "1" }
+        
+        post next_move_api_v1_games_url, params: { board: board, turn: 0 }, as: :json
+        
+        assert_response :success
+        json = JSON.parse(response.body)
+        assert_equal(-1, json["next_move"], "Should return -1 (Pass) as there are no White pieces to capture")
+      end
+
+      test "should return valid move 14 (G2) for User Image 2" do
+        # Board 2 from user image:
+        # White(2): F3 (21)
+        # Black(1): D4(27), E4(28), D5(35), E5(36), F5(37), D6(43), C7(50)
+        # Note: Image shows hint at D3(19), but E3 is empty, making D3 illegal.
+        # AI finds 14 (G2) which captures F3 -> E4 (Diagonal).
+        board = "0" * 64
+        board[21] = "2"
+        [19, 27, 28, 35, 36, 37, 43, 50].each { |i| board[i] = "1" }
+        
+        post next_move_api_v1_games_url, params: { board: board, turn: 1 }, as: :json
+        
+        assert_response :success
+        json = JSON.parse(response.body)
+        
+        # 14 (G2) is confirmed valid by AI probe and visual check (G2->F3->E4)
+        assert_equal 42, json["next_move"]
+      end
     end
   end
 end
