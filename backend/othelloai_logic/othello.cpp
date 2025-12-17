@@ -31,22 +31,20 @@ int main(int argc, char *argv[]) {
     std::string s_board = argv[1];
     for (int i = 0; i < hw2; ++i) {
       // Input: '0'=Empty, '1'=Black, '2'=White
-      // C++:    0=Black,   1=White,   2=Vacant
+      // C++:    0=Empty,   1=Black,   2=White (Aligned)
       char c = s_board[i];
-      if (c == '0')
-        arr[i] = 2; // Empty -> Vacant
-      else if (c == '1')
-        arr[i] = 0; // Black -> Black
-      else if (c == '2')
-        arr[i] = 1; // White -> White
-      else
-        arr[i] = 2; // Default to Vacant
+      if (c >= '0' && c <= '2') {
+        arr[i] = c - '0';
+      } else {
+        arr[i] = vacant; // Default to Vacant (0)
+      }
     }
     b.trans_idx(arr);
 
     // 3. 引数から手番を復元
     t = std::stoi(argv[2]); // 0 or 1
-    b.player = t;
+    // API(0=Black, 1=White) -> C++(1=Black, 2=White)
+    b.player = t + 1;
 
     // 4. 探索 (9手読み, offset 3は調整パラメータ)
     int mv = search(b, 9, 3);
