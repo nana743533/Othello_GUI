@@ -21,3 +21,6 @@ shell-backend:
 
 shell-frontend:
 	docker compose exec frontend sh
+
+test-backend:
+	docker compose exec backend bin/rails test test/controllers/api/v1/games_controller_test.rb
