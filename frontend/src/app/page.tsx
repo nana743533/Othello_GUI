@@ -31,7 +31,6 @@ function GameContent() {
   // Determine player color (0: Black, 1: White)
   // If param is invalid/loading, default to 0 to prevent crashes, but effect will redirect.
   const playerColor = playerParam === 'white' ? 1 : 0;
-  const aiColor = playerColor === 0 ? 1 : 0;
 
   const [showResult, setShowResult] = useState(false);
 
@@ -58,6 +57,7 @@ function GameContent() {
   // Show result popup when winner is decided
   useEffect(() => {
     if (winner !== null) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       setShowResult(true);
     }
   }, [winner]);
