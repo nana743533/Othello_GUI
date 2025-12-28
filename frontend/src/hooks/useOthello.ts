@@ -25,6 +25,7 @@ export const useOthello = (playerColor: Turn = 0) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [winner, setWinner] = useState<Turn | 'Draw' | null>(null);
   const [passPopup, setPassPopup] = useState<'AI' | 'USER' | null>(null);
+  const [isStateLoaded, setIsStateLoaded] = useState(false);
 
   // Load state from local storage on mount
   useEffect(() => {
@@ -37,12 +38,12 @@ export const useOthello = (playerColor: Turn = 0) => {
           setTurn(parsed.turn as Turn);
           setWinner(parsed.winner);
           setIsProcessing(false); // Always reset processing on reload to prevent stuck state
-          // Note: We don't save passPopup usually, or maybe we should? Let's reset popup.
         }
       } catch (e) {
         console.error("Failed to load game state", e);
       }
     }
+    setIsStateLoaded(true);
   }, []);
 
   // Save state to local storage whenever critical state changes
