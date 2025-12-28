@@ -6,6 +6,9 @@ type CellValue = -1 | 0 | 1;
 // 0: Black (First), 1: White
 type Turn = 0 | 1;
 
+// Storage Key
+const STORAGE_KEY = 'othello_game_state';
+
 export const useOthello = (playerColor: Turn = 0) => {
   const aiColor = (playerColor === 0 ? 1 : 0) as Turn;
 
@@ -16,13 +19,41 @@ export const useOthello = (playerColor: Turn = 0) => {
   initialBoard[35] = 0;
   initialBoard[36] = 1;
 
+  // Initialize state functions
   const [board, setBoard] = useState<CellValue[]>(initialBoard);
-  const [turn, setTurn] = useState<Turn>(0); // Black starts (Always 0 starts)
+  const [turn, setTurn] = useState<Turn>(0);
   const [isProcessing, setIsProcessing] = useState(false);
   const [winner, setWinner] = useState<Turn | 'Draw' | null>(null);
-
-  // Pass Popup State: 'AI' means AI passed, 'USER' means User passed
   const [passPopup, setPassPopup] = useState<'AI' | 'USER' | null>(null);
+
+  // Load state from local storage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.board && typeof parsed.turn === 'number') {
+          setBoard(parsed.board);
+          setTurn(parsed.turn as Turn);
+          setWinner(parsed.winner);
+          setIsProcessing(false); // Always reset processing on reload to prevent stuck state
+          // Note: We don't save passPopup usually, or maybe we should? Let's reset popup.
+        }
+      } catch (e) {
+        console.error("Failed to load game state", e);
+      }
+    }
+  }, []);
+
+  // Save state to local storage whenever critical state changes
+  useEffect(() => {
+    const stateToSave = {
+      board,
+      turn,
+      winner
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+  }, [board, turn, winner]);
 
   const checkGameEnd = useCallback((currentBoard: CellValue[]) => {
     const blackCanMove = hasValidMoves(currentBoard, 0);
@@ -154,11 +185,13 @@ export const useOthello = (playerColor: Turn = 0) => {
     passPopup,
     acknowledgePass,
     executeMove,
+    isStateLoaded, // Export this
     resetGame: () => {
       setBoard(initialBoard);
       setTurn(0);
       setWinner(null);
       setPassPopup(null);
+      localStorage.removeItem(STORAGE_KEY); // Clear storage on reset
     }
   };
 };

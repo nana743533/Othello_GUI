@@ -6,6 +6,8 @@ export default function NewGamePage() {
   const router = useRouter();
 
   const handleSelectColor = (color: 'black' | 'white') => {
+    // Clear any existing game state to start fresh
+    localStorage.removeItem('othello_game_state');
     router.push(`/?player=${color}`);
   };
 

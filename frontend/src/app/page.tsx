@@ -41,7 +41,8 @@ function GameContent() {
     passPopup,
     acknowledgePass,
     executeMove,
-    resetGame
+    resetGame,
+    isStateLoaded
   } = useOthello(playerColor); // Pass player color
 
   const blackCount = board.filter((c) => c === 0).length;
@@ -75,9 +76,17 @@ function GameContent() {
   const blackLabel = playerColor === 0 ? 'You' : 'AI';
   const whiteLabel = playerColor === 1 ? 'You' : 'AI';
 
-  // Avoid rendering game while checking param to prevent flash
+  // Avoid rendering game while checking param or loading state to prevent flash
   if (playerParam !== 'black' && playerParam !== 'white') {
-    return null; // or a loading spinner
+    return null;
+  }
+
+  if (!isStateLoaded) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-neumorphism-base text-neumorphism-text font-bold animate-pulse">
+        Loading...
+      </div>
+    );
   }
 
   return (
