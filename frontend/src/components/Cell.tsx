@@ -19,8 +19,8 @@ export const Cell: React.FC<CellProps> = ({ value, onClick, disabled }) => {
         transition-all duration-200 ease-in-out
         cursor-pointer
         ${value === -1
-          ? 'bg-neumorphism-base shadow-neumorphism-flat hover:shadow-neumorphism-pressed active:shadow-neumorphism-pressed'
-          : 'bg-neumorphism-base shadow-neumorphism-pressed'
+          ? 'bg-neumorphism-green-base shadow-neumorphism-green-flat hover:shadow-neumorphism-green-pressed active:shadow-neumorphism-green-pressed'
+          : 'bg-neumorphism-green-base shadow-neumorphism-green-pressed'
         }
       `}
     >

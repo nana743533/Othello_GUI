@@ -5,8 +5,16 @@
   --color-neumorphism-text: #4A5568;
   --color-neumorphism-accent: #4FD1C5;
 
+  /* Green Theme for Board */
+  --color-neumorphism-green-base: #C1E1C1;
+  /* Tea Green / Pastel Green */
+  --color-neumorphism-green-surface: #C1E1C1;
+
   --shadow-neumorphism-flat: 9px 9px 16px rgb(163 177 198 / 0.6), -9px -9px 16px rgb(255 255 255 / 0.5);
   --shadow-neumorphism-pressed: inset 6px 6px 10px 0 rgb(163 177 198 / 0.7), inset -6px -6px 10px 0 rgb(255 255 255 / 0.8);
+
+  --shadow-neumorphism-green-flat: 9px 9px 16px rgb(158 184 158 / 0.6), -9px -9px 16px rgb(228 255 228 / 0.5);
+  --shadow-neumorphism-green-pressed: inset 6px 6px 10px 0 rgb(158 184 158 / 0.7), inset -6px -6px 10px 0 rgb(228 255 228 / 0.8);
 }
 
 :root {
