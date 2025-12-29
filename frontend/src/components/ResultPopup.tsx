@@ -22,18 +22,18 @@ export const ResultPopup: React.FC<ResultPopupProps & { playerColor?: Turn }> = 
   let resultMessage = '';
 
   if (winner === 'Draw') {
-    resultMessage = 'Draw!';
+    resultMessage = '引き分け!';
     // Split empty cells
     const split = Math.floor(emptyCount / 2); // Should be even if board is even, but safety floor
     finalBlackCount += split;
     finalWhiteCount += split;
   } else if (winner === 0) {
     // Black Wins
-    resultMessage = playerColor === 0 ? 'You Win!' : 'AI Wins!';
+    resultMessage = playerColor === 0 ? 'あなたの勝ち!' : 'AIの勝ち!';
     finalBlackCount += emptyCount;
   } else {
     // White Wins
-    resultMessage = playerColor === 1 ? 'You Win!' : 'AI Wins!';
+    resultMessage = playerColor === 1 ? 'あなたの勝ち!' : 'AIの勝ち!';
     finalWhiteCount += emptyCount;
   }
 
@@ -68,14 +68,14 @@ export const ResultPopup: React.FC<ResultPopupProps & { playerColor?: Turn }> = 
             onClick={onClose}
             className="px-8 py-3 text-lg font-bold rounded-2xl text-neumorphism-text bg-neumorphism-base shadow-neumorphism-flat hover:shadow-neumorphism-pressed active:scale-95 transition-all duration-200"
           >
-            Close
+            閉じる
           </button>
 
           <button
             onClick={onRestart}
             className="px-10 py-3 text-lg font-bold rounded-2xl text-white bg-blue-500 shadow-lg hover:bg-blue-600 hover:shadow-xl active:scale-95 transition-all duration-200"
           >
-            New Game
+            新しいゲーム
           </button>
         </div>
       </div>

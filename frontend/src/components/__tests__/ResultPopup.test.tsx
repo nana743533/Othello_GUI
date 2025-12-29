@@ -19,14 +19,14 @@ describe('ResultPopup Component', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders "You Win!" and adds empty cells to Black score when Black wins', () => {
+  it('renders "あなたの勝ち!" and adds empty cells to Black score when Black wins', () => {
     // Winner 0 = Black (User)
     render(
       <ResultPopup winner={0} board={mockBoard} onRestart={() => { }} onClose={() => { }} />
     );
 
     // Message
-    expect(screen.getByText('You Win!')).toBeInTheDocument();
+    expect(screen.getByText('あなたの勝ち!')).toBeInTheDocument();
 
     // Score Calculation
     // Black: 3 (raw) + 60 (empty) = 63
@@ -35,14 +35,14 @@ describe('ResultPopup Component', () => {
     expect(screen.getByText('1')).toBeInTheDocument();  // White Score
   });
 
-  it('renders "AI Wins!" and adds empty cells to White score when White wins', () => {
+  it('renders "AIの勝ち!" and adds empty cells to White score when White wins', () => {
     // Winner 1 = White (AI)
     render(
       <ResultPopup winner={1} board={mockBoard} onRestart={() => { }} onClose={() => { }} />
     );
 
     // Message
-    expect(screen.getByText('AI Wins!')).toBeInTheDocument();
+    expect(screen.getByText('AIの勝ち!')).toBeInTheDocument();
 
     // Score Calculation
     // Black: 3 (raw)
@@ -51,14 +51,14 @@ describe('ResultPopup Component', () => {
     expect(screen.getByText('61')).toBeInTheDocument(); // White Score
   });
 
-  it('renders "Draw!" and splits empty cells when Draw', () => {
+  it('renders "引き分け!" and splits empty cells when Draw', () => {
     // Winner 'Draw'
     render(
       <ResultPopup winner="Draw" board={mockBoard} onRestart={() => { }} onClose={() => { }} />
     );
 
     // Message
-    expect(screen.getByText('Draw!')).toBeInTheDocument();
+    expect(screen.getByText('引き分け!')).toBeInTheDocument();
 
     // Score Calculation
     // Empty = 60. Split = 30 each.
@@ -74,7 +74,7 @@ describe('ResultPopup Component', () => {
       <ResultPopup winner={0} board={mockBoard} onRestart={mockRestart} onClose={() => { }} />
     );
 
-    const button = screen.getByRole('button', { name: 'New Game' });
+    const button = screen.getByRole('button', { name: '新しいゲーム' });
     fireEvent.click(button);
 
     expect(mockRestart).toHaveBeenCalledTimes(1);
