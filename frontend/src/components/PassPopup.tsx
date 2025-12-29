@@ -19,11 +19,11 @@ export const PassPopup: React.FC<PassPopupProps> = ({ passType, onAcknowledge })
         className="p-8 rounded-2xl bg-neumorphism-base shadow-2xl transform scale-100 transition-transform"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-2xl font-bold text-neumorphism-text mb-4 text-center">PASS</h2>
+        <h2 className="text-2xl font-bold text-neumorphism-text mb-4 text-center">パス</h2>
         <p className="text-lg text-neumorphism-text mb-6 text-center">
           {passType === 'AI'
-            ? "AI cannot move. Turn passes to you."
-            : "You cannot move. Turn passes to AI."}
+            ? "AIは動けません。あなたのターンに移ります。"
+            : "あなたは動けません。AIのターンに移ります。"}
         </p>
         <button
           onClick={onAcknowledge}

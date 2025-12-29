@@ -10,7 +10,7 @@ import { useOthello } from '@/hooks/useOthello';
 
 export default function Home() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-neumorphism-base flex items-center justify-center text-neumorphism-text">Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-neumorphism-base flex items-center justify-center text-neumorphism-text">読み込み中...</div>}>
       <GameContent />
     </Suspense>
   );
@@ -57,7 +57,7 @@ function GameContent() {
   // Show result popup when winner is decided
   useEffect(() => {
     if (winner !== null) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowResult(true);
     }
   }, [winner]);
@@ -67,23 +67,23 @@ function GameContent() {
   let statusColor = 'text-neumorphism-text';
 
   if (winner !== null) {
-    if (winner === 'Draw') statusDisplay = 'Draw';
-    else if (winner === playerColor) statusDisplay = 'You Win!';
-    else statusDisplay = 'AI Wins!';
+    if (winner === 'Draw') statusDisplay = '引き分け';
+    else if (winner === playerColor) statusDisplay = 'あなたの勝ち！';
+    else statusDisplay = 'AIの勝ち！';
   } else {
     // If not game over
     if (turn === playerColor) {
-      statusDisplay = 'Your Turn';
+      statusDisplay = 'あなたのターン';
     } else {
       // AI Turn
-      statusDisplay = 'AI Thinking...';
+      statusDisplay = 'AIが考え中...';
       statusColor = 'text-neumorphism-accent';
     }
   }
 
   // Dynamic Labels
-  const blackLabel = playerColor === 0 ? 'You' : 'AI';
-  const whiteLabel = playerColor === 1 ? 'You' : 'AI';
+  const blackLabel = playerColor === 0 ? 'あなた' : 'AI';
+  const whiteLabel = playerColor === 1 ? 'あなた' : 'AI';
 
   // Avoid rendering game while checking param or loading state to prevent flash
   if (playerParam !== 'black' && playerParam !== 'white') {
@@ -93,7 +93,7 @@ function GameContent() {
   if (!isStateLoaded) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-neumorphism-base text-neumorphism-text font-bold animate-pulse">
-        Loading...
+        読み込み中...
       </div>
     );
   }
@@ -136,7 +136,7 @@ function GameContent() {
             onClick={resetGame}
             className="w-full py-2 font-bold text-lg rounded-xl text-neumorphism-text bg-neumorphism-base shadow-neumorphism-flat hover:shadow-neumorphism-pressed active:translate-y-0.5 transition-all duration-200"
           >
-            Reset
+            リセット
           </button>
 
           {/* New Game Button */}
@@ -144,7 +144,7 @@ function GameContent() {
             onClick={handleNewGame}
             className="w-full py-2 font-bold text-lg rounded-xl text-neumorphism-text bg-neumorphism-base shadow-neumorphism-flat hover:shadow-neumorphism-pressed active:translate-y-0.5 transition-all duration-200"
           >
-            New Game
+            新しいゲーム
           </button>
         </div>
       </div>

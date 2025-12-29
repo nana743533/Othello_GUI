@@ -26,7 +26,7 @@ describe('ResultPopup Component', () => {
     );
 
     // Message
-    expect(screen.getByText('You Win!')).toBeInTheDocument();
+    expect(screen.getByText('あなたの勝ち！')).toBeInTheDocument();
 
     // Score Calculation
     // Black: 3 (raw) + 60 (empty) = 63
@@ -42,7 +42,7 @@ describe('ResultPopup Component', () => {
     );
 
     // Message
-    expect(screen.getByText('AI Wins!')).toBeInTheDocument();
+    expect(screen.getByText('AIの勝ち！')).toBeInTheDocument();
 
     // Score Calculation
     // Black: 3 (raw)
@@ -58,7 +58,7 @@ describe('ResultPopup Component', () => {
     );
 
     // Message
-    expect(screen.getByText('Draw!')).toBeInTheDocument();
+    expect(screen.getByText('引き分け！')).toBeInTheDocument();
 
     // Score Calculation
     // Empty = 60. Split = 30 each.
@@ -74,7 +74,7 @@ describe('ResultPopup Component', () => {
       <ResultPopup winner={0} board={mockBoard} onRestart={mockRestart} onClose={() => { }} />
     );
 
-    const button = screen.getByRole('button', { name: 'New Game' });
+    const button = screen.getByRole('button', { name: '新しいゲーム' });
     fireEvent.click(button);
 
     expect(mockRestart).toHaveBeenCalledTimes(1);

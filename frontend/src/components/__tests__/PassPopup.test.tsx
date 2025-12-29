@@ -10,14 +10,14 @@ describe('PassPopup Component', () => {
 
   it('renders AI pass message when passType is AI', () => {
     render(<PassPopup passType="AI" onAcknowledge={() => { }} />);
-    expect(screen.getByText('PASS')).toBeInTheDocument();
-    expect(screen.getByText('AI cannot move. Turn passes to you.')).toBeInTheDocument();
+    expect(screen.getByText('パス')).toBeInTheDocument();
+    expect(screen.getByText('AIは動けません。あなたのターンに移ります。')).toBeInTheDocument();
   });
 
   it('renders User pass message when passType is USER', () => {
     render(<PassPopup passType="USER" onAcknowledge={() => { }} />);
-    expect(screen.getByText('PASS')).toBeInTheDocument();
-    expect(screen.getByText('You cannot move. Turn passes to AI.')).toBeInTheDocument();
+    expect(screen.getByText('パス')).toBeInTheDocument();
+    expect(screen.getByText('あなたは動けません。AIのターンに移ります。')).toBeInTheDocument();
   });
 
   it('calls onAcknowledge when OK button is clicked', () => {
@@ -39,9 +39,9 @@ describe('PassPopup Component', () => {
     // In our component, the outer div has the onClick.
     // Using a test-id or just assumption of structure. Let's add test-id if needed, but for now getting by text logic might miss the overlay.
     // Let's assume the first div in container is the overlay.
-    // Actually, screen.getByText('PASS').parentElement?.parentElement should be the overlay.
+    // Actually, screen.getByText('パス').parentElement?.parentElement should be the overlay.
 
-    const modalContent = screen.getByText('PASS').parentElement;
+    const modalContent = screen.getByText('パス').parentElement;
     const overlay = modalContent?.parentElement;
 
     if (overlay) {
@@ -56,7 +56,7 @@ describe('PassPopup Component', () => {
     const mockAcknowledge = jest.fn();
     render(<PassPopup passType="AI" onAcknowledge={mockAcknowledge} />);
 
-    const modalContent = screen.getByText('PASS').parentElement;
+    const modalContent = screen.getByText('パス').parentElement;
 
     if (modalContent) {
       fireEvent.click(modalContent);
