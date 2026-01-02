@@ -5,7 +5,7 @@
 高速なC++思考エンジンとモダンなWeb技術（Next.js + Rails）を組み合わせた、没入感のあるオセロアプリケーションです。
 
 <p align="center">
-  <img src="public/assets/preview.png" alt="UI Preview" width="100%">
+  <img src="public/assets/preview3.png" alt="UI Preview" width="100%">
 </p>
 
 ## ✨ Features
@@ -24,41 +24,12 @@
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Node.js (v20+)
-- Ruby (v3.2+) & Rails (v8.1+)
-- C++ Compiler (g++ or clang++)
-- Docker (Optional, for containerized run)
+セットアップや起動方法については、以下のドキュメントを参照してください。
 
-### Quick Run (Docker)
-もしDockerがインストールされていれば、以下のコマンドだけで全ての環境が立ち上がります。
+👉 **[セットアップガイド (docs/GETTING_STARTED.md)](docs/GETTING_STARTED.md)**
 
-```bash
-make up
-# Access http://localhost:3000
-```
-
-### Manual Setup
-手動でセットアップする場合の手順です。
-
-#### 1. Backend Setup
-```bash
-cd backend
-bundle install
-# C++エンジンのコンパイル
-cd othelloai_logic && g++ -O3 -o othello othello.cpp
-cd ..
-# サーバー起動 (Port: 3001)
-bin/rails s -p 3001
-```
-
-#### 2. Frontend Setup
-```bash
-cd frontend
-npm install
-# 開発サーバー起動 (Port: 3000)
-npm run dev
-```
+1. **Docker Quick Start**: `make up`
+2. **Manual Setup**: Backend & Frontend separate install
 
 ## 🤝 Contributing
 Contributions are welcome!
