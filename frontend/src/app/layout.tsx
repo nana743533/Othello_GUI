@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Othello GUI",
+  title: "Nanase Zero",
   description: "A Neumorphism Othello game with AI integration",
 };
 
