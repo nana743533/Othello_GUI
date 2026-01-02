@@ -1,4 +1,4 @@
-# Othello GUI
+# ⚪️⚫️ Othello GUI
 
 **Modern, Fast, and Beautiful.**
 
