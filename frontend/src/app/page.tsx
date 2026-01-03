@@ -163,25 +163,13 @@ function GameContent() {
             New Game
           </button>
 
-          {/* AI Level Selector */}
+          {/* AI Level Display */}
           {gameMode === 'ai' && (
             <div className="w-full mt-2">
               <label className="block text-sm font-bold text-neumorphism-text mb-2 text-center">AI Level</label>
-              <select
-                value={aiLevelParam}
-                onChange={(e) => {
-                  const newLevel = e.target.value;
-                  const params = new URLSearchParams(searchParams.toString());
-                  params.set('aiLevel', newLevel);
-                  router.replace(`/?${params.toString()}`);
-                }}
-                className="w-full p-2 rounded-xl bg-neumorphism-base text-neumorphism-text shadow-neumorphism-inset font-bold text-center border-none outline-none focus:ring-2 focus:ring-blue-400/50"
-              >
-                <option value="v1">Level 1</option>
-                <option value="v2">Level 2</option>
-                <option value="v3">Level 3</option>
-                {/* Future levels can be added here */}
-              </select>
+              <div className="w-full p-2 rounded-xl bg-neumorphism-base text-neumorphism-text shadow-neumorphism-inset font-bold text-center">
+                {{ 'v1': 'Easy', 'v2': 'Normal', 'v3': 'Master' }[aiLevelParam] || 'Easy'}
+              </div>
             </div>
           )}
         </div>

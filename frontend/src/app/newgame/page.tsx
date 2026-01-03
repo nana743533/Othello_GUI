@@ -6,11 +6,17 @@ import { useState } from 'react';
 export default function NewGamePage() {
   const router = useRouter();
   const [gameMode, setGameMode] = useState<'ai' | 'human' | null>(null);
+  const [aiLevel, setAiLevel] = useState<string>('v1');
 
   const handleSelectColor = (color: 'black' | 'white') => {
     // Clear any existing game state to start fresh
     localStorage.removeItem('othello_game_state');
-    router.push(`/?player=${color}&mode=${gameMode}`);
+    const query = new URLSearchParams({
+      player: color,
+      mode: gameMode || 'ai',
+      ...(gameMode === 'ai' ? { aiLevel } : {})
+    });
+    router.push(`/?${query.toString()}`);
   };
 
   // First screen: Select game mode
@@ -51,6 +57,35 @@ export default function NewGamePage() {
         <h1 className="text-3xl md:text-4xl font-bold text-neumorphism-text">
           Select Your Color
         </h1>
+
+        {/* AI Level Selector */}
+        <div className="flex flex-col items-center gap-4 w-full max-w-[300px]">
+          <label className="text-lg font-bold text-neumorphism-text">AI Level</label>
+          <div className="flex gap-4 w-full">
+            {[
+              { id: 'v1', label: 'Easy' },
+              { id: 'v2', label: 'Normal' },
+              { id: 'v3', label: 'Master' },
+            ].map((levelObj) => (
+              <button
+                key={levelObj.id}
+                onClick={() => setAiLevel(levelObj.id)}
+                disabled={levelObj.id !== 'v1'}
+                className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all duration-200 ${aiLevel === levelObj.id
+                  ? 'bg-neumorphism-base text-blue-500 shadow-neumorphism-pressed'
+                  : 'bg-neumorphism-base text-neumorphism-text shadow-neumorphism-flat hover:shadow-neumorphism-pressed hover:text-blue-500'
+                  } ${levelObj.id !== 'v1' ? 'opacity-50 cursor-not-allowed shadow-none' : ''}`}
+              >
+                <div className="flex flex-col items-center">
+                  <span>{levelObj.label}</span>
+                  {levelObj.id !== 'v1' && (
+                    <span className="text-[10px] sm:text-xs font-normal opacity-60 mt-1">(Coming Soon)</span>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="flex flex-row gap-8 md:gap-16">
           {/* Black Button */}
