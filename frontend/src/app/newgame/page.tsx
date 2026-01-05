@@ -70,15 +70,15 @@ export default function NewGamePage() {
               <button
                 key={levelObj.id}
                 onClick={() => setAiLevel(levelObj.id)}
-                disabled={levelObj.id !== 'v1'}
+                disabled={levelObj.id === 'v3'}
                 className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all duration-200 ${aiLevel === levelObj.id
                   ? 'bg-neumorphism-base text-blue-500 shadow-neumorphism-pressed'
                   : 'bg-neumorphism-base text-neumorphism-text shadow-neumorphism-flat hover:shadow-neumorphism-pressed hover:text-blue-500'
-                  } ${levelObj.id !== 'v1' ? 'opacity-50 cursor-not-allowed shadow-none' : ''}`}
+                  } ${levelObj.id === 'v3' ? 'opacity-50 cursor-not-allowed shadow-none' : ''}`}
               >
                 <div className="flex flex-col items-center">
                   <span>{levelObj.label}</span>
-                  {levelObj.id !== 'v1' && (
+                  {levelObj.id === 'v3' && (
                     <span className="text-[10px] sm:text-xs font-normal opacity-60 mt-1">(Coming Soon)</span>
                   )}
                 </div>
