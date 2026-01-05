@@ -33,7 +33,7 @@ const int global_place[n_board_idx][hw]{
 
 const int global_move[n_board_idx]{
     1, 1, 1, 1, 1, 1, 1, 1,          // 横
-    1, 1, 1, 1, 1, 1, 1, 1,          // 縦
+    8, 8, 8, 8, 8, 8, 8, 8,          // 縦
     9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, // 右下がりの斜め
     7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7  // 左下がりの斜め
 };
@@ -301,10 +301,13 @@ public:
 private:
   // 石をひっくり返す
   inline void flip(board *res, int g_place) {
-    for (int i = 0; i < 3; ++i)
-      res->board_idx[place_included[g_place][i]] =
-          flip_arr[this->player][res->board_idx[place_included[g_place][i]]]
-                  [local_place[g_place][i]];
+    for (int i = 0; i < 3; ++i) {
+      if (place_included[g_place][i] != -1) {
+        res->board_idx[place_included[g_place][i]] =
+            flip_arr[this->player][res->board_idx[place_included[g_place][i]]]
+                    [local_place[g_place][i]];
+      }
+    }
     if (place_included[g_place][3] != -1)
       res->board_idx[place_included[g_place][3]] =
           flip_arr[this->player][res->board_idx[place_included[g_place][3]]]
